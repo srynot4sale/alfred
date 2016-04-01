@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <title>Alfred</title>
+
+    <link href='http://fonts.googleapis.com/css?family=Roboto+Condensed:300' rel='stylesheet' type='text/css'>
+    <script src="http://code.jquery.com/jquery-1.12.0.min.js"></script>
+    <script type="text/javascript">
+
+        var data = {
+            "news": [
+                "Numbers of women playing rugby rises by 30 per cent in four years", 
+                "Shot soldier Danny Rion Jordan, 23, killed while 'taking a break' on hunting trip", 
+                "Drugs tested covertly at a New Zealand festival: Almost half not what partygoers expected", 
+                "Kiwi firefighters' changing roles - when saving lives isn't just battling blazes", 
+                "Blair Palmer's wife will always remember last words to her: 'love you too, babe'", 
+                "Paekakariki Hill Rd reopens after car goes down bank"
+            ], 
+            "weather": [
+                {
+                    "min": "15", 
+                    "max": "20", 
+                    "dow": "Friday", 
+                    "forecast": "Mostly cloudy, occasional rain tonight. Northerly.", 
+                    "forecastWord": "Showers", 
+                    "date": "1 Apr", 
+                    "day": "Today"
+                }, 
+                {
+                    "min": "17", 
+                    "max": "21", 
+                    "dow": "Saturday", 
+                    "forecast": "Periods of rain, easing to showers from afternoon. N'ly.", 
+                    "forecastWord": "Showers", 
+                    "date": "2 Apr", 
+                    "day": "Tomorrow"
+                }
+            ]
+        }
+
+        $(function() {
+            // Put the data in the places
+
+            for (var i in data['news']) {
+                var article = data['news'][i];
+                $('div#news ul').append($('<li>').html(article));
+            }
+
+            for (var i in data['weather']) {
+                var forecast = data['weather'][i];
+
+                var con = $('<li>');
+                con.append($('<h1>').html(forecast['day'] + ' - ' + forecast['dow'] + ', ' + forecast['date']));
+                con.append($('<h2>').addClass('forecast').html(forecast['forecast']));
+                con.append($('<h2>').addClass('minmax').html('Min ' + forecast['min'] + ' // ' + 'Max ' + forecast['max']));
+
+                $('div#weather ul').append(con);
+            }
+
+        });
+
+    </script>
+
+    <style type="text/css">
+
+        body {
+            background-color: #000;
+            font-family: 'Roboto Condensed', sans-serif;
+            color: #fff;
+            padding: 50px;
+        }
+
+        h1,
+        h2 {
+            font-weight: normal;
+            padding: 0;
+            margin: 0;
+            margin-bottom: 10px;
+        }
+
+        ul,
+        li {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1.time {
+            font-size: 400%;
+        }
+
+        div#now {
+            float: left;
+        }
+
+        div#weather {
+            float: right;
+            text-align: right;
+        }
+
+        div#weather ul li {
+            margin-bottom: 20px;
+        }
+
+        div#news {
+            position: fixed;
+            width: 100%;
+            bottom: 50px;
+        }
+
+        div#news ul li {
+            margin-bottom: 5px;
+        }
+
+        hi {
+            color: #878787;
+        }
+
+    </style>
+</head>
+<body>
+
+<div id="now">
+    <h1 class="time">11:31pm</h1>
+    <h1 class="date">Friday, 1st April 2016</h1>
+</div>
+
+
+<div id="weather">
+    <ul>
+
+    </ul>
+
+</div>
+
+
+<div id="news">
+    <h1>Wellington News</h1>
+    <ul>
+
+    </ul>
+</div>
+
+
+</body>
+</html>
