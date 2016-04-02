@@ -9,37 +9,6 @@
     <script src="/res/moment.min.js"></script>
     <script type="text/javascript">
 
-        var data = {
-            "news": [
-                "Numbers of women playing rugby rises by 30 per cent in four years", 
-                "Shot soldier Danny Rion Jordan, 23, killed while 'taking a break' on hunting trip", 
-                "Drugs tested covertly at a New Zealand festival: Almost half not what partygoers expected", 
-                "Kiwi firefighters' changing roles - when saving lives isn't just battling blazes", 
-                "Blair Palmer's wife will always remember last words to her: 'love you too, babe'", 
-                "Paekakariki Hill Rd reopens after car goes down bank"
-            ], 
-            "weather": [
-                {
-                    "min": "15", 
-                    "max": "20", 
-                    "dow": "Friday", 
-                    "forecast": "Mostly cloudy, occasional rain tonight. Northerly.", 
-                    "forecastWord": "Showers", 
-                    "date": "1 Apr", 
-                    "day": "Today"
-                }, 
-                {
-                    "min": "17", 
-                    "max": "21", 
-                    "dow": "Saturday", 
-                    "forecast": "Periods of rain, easing to showers from afternoon. N'ly.", 
-                    "forecastWord": "Showers", 
-                    "date": "2 Apr", 
-                    "day": "Tomorrow"
-                }
-            ]
-        }
-
         function update() {
             // Put the data in the places
             $.get(
@@ -147,8 +116,8 @@
 <body>
 
 <div id="now">
-    <h1 class="time">11:31pm</h1>
-    <h1 class="date">Friday, 1st April 2016</h1>
+    <h1 class="time"></h1>
+    <h1 class="date"></h1>
 </div>
 
 
