@@ -14,11 +14,13 @@
             $.get(
                 '/feed.json',
                 function(data) {
+                    $('div#news ul li').remove();
                     for (var i in data['news']) {
                         var article = data['news'][i];
                         $('div#news ul').append($('<li>').html('&bull; ' + article));
                     }
 
+                    $('div#weather ul li').remove();
                     for (var i in data['weather']) {
                         var forecast = data['weather'][i];
 
