@@ -7,8 +7,8 @@ import os.path
 import requests
 import urllib
 import urlparse
-#import PIL.Image
-#import unicodecsv
+
+import config
 
 def get_page(url):
     browser = RoboBrowser(user_agent='a python robot')
@@ -39,21 +39,37 @@ for item in news_base('section.portrait .it-article-headline a').items():
 ###
 # Get weather
 ###
-r = urllib.urlopen('http://www.metservice.com/publicData/localForecastWellington')
-data = json.loads(r.read())
+weather_current_url = "http://api.wunderground.com/api/{0}/conditions/q/{1}.json".format(config.WUNDERLAND_API, config.WUNDERLAND_LOCATION)
+r = urllib.urlopen(weather_current_url)
+weather_current = json.loads(r.read())['current_observation']
 
 weather = []
-days = {'Today': 0, 'Tomorrow': 1}
-dates = days.keys()
-dates.sort()
-for day in dates:
-    d = data['days'][days[day]]
+weather.append({
+    'day': 'Now',
+    'temperature': weather_current['temp_c'],
+    'forecast': weather_current['weather'],
+    'wind': weather_current['wind_string']
+})
 
-    daydata = {'day': day}
-    for i in ('dow', 'date', 'min', 'max', 'forecast', 'forecastWord'):
-        daydata[i] = d[i]
+weather_future_url = "http://api.wunderground.com/api/{0}/forecast/q/{1}.json".format(config.WUNDERLAND_API, config.WUNDERLAND_LOCATION)
+r = urllib.urlopen(weather_future_url)
+weather_future_json = json.loads(r.read())
+weather_future_simple = weather_future_json['forecast']['txt_forecast']['forecastday']
+weather_future_detail = weather_future_json['forecast']['simpleforecast']['forecastday']
 
-    weather.append(daydata)
+i = 0
+for day in weather_future_simple:
+    i += 1
+    if i > 4:
+        break
+
+    detail = weather_future_detail[0 if i in (1,2) else 1]
+    weather.append({
+        'day': day['title'],
+        'temperature': detail['low']['celsius'] if i in (2,4) else detail['high']['celsius'],
+        'forecast': day['fcttext_metric'],
+        'wind': str(detail['maxwind']['kph']) + 'kph ' + (detail['maxwind']['dir'] if detail['maxwind']['dir'] != 'Variable' else '')
+    });
 
 
 ret = {

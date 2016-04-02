@@ -2,3 +2,5 @@
 /feed.json
 *.swp
 *.swo
+*.pyc
+config.py

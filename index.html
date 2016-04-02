@@ -25,9 +25,9 @@
                         var forecast = data['weather'][i];
 
                         var con = $('<li>').addClass('no-'+i);
-                        con.append($('<h1>').html(forecast['day'] + ' &mdash; ' + forecast['dow']));
+                        con.append($('<h2>').html(forecast['day'] + ' //'));
+                        con.append($('<h1>').addClass('minmax').html(forecast['wind'] + ' &mdash; ' + ' ' + forecast['temperature'] + '&deg;C'));
                         con.append($('<h2>').addClass('forecast').html(forecast['forecast']));
-                        con.append($('<h2>').addClass('minmax').html('Min ' + forecast['min'] + ' // ' + 'Max ' + forecast['max']));
 
                         $('div#weather ul').append(con);
                     }
@@ -81,7 +81,7 @@
         }
 
         h1.time {
-            font-size: 400%;
+            font-size: 600%;
         }
 
         div#now {
@@ -100,12 +100,16 @@
         div#weather ul li {
             margin-top: 0;
             padding-top: 20px;
-            border-top: 1px solid #878787;
         }
 
         div#weather ul li.no-0 {
             border-top: none;
             padding-top: 0;
+        }
+
+        div#weather ul li h2.forecast {
+            font-size: 90%;
+            color: #ccc;
         }
 
         div#news {
@@ -116,6 +120,7 @@
 
         div#news ul li {
             margin-bottom: 5px;
+            color: #ccc;
         }
 
     </style>
