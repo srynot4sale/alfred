@@ -1,0 +1,3 @@
+# Cron
+
+*/15 * * * * aaronb cd /home/aaronb/code/www/alfred/; ./env/bin/python ./build.py > ./feed.json

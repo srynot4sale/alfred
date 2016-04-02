@@ -36,11 +36,6 @@ for item in news_base('section.portrait .it-article-headline a').items():
     stories.append(title)
 
 
-print("\n\nWellington news:\n")
-for story in stories:
-    print('- {}'.format(story))
-
-
 ###
 # Get weather
 ###
@@ -59,11 +54,6 @@ for day in dates:
         daydata[i] = d[i]
 
     weather.append(daydata)
-
-
-print("\n\nWeather:\n")
-for w in weather:
-    print "{0} ({1} {2})\n{3}\nMin: {4}, Max: {5}\n\t{6}\n".format(w['day'], w['dow'], w['date'], w['forecastWord'], w['min'], w['max'], w['forecast'])
 
 
 ret = {

@@ -6,6 +6,7 @@
 
     <link href='http://fonts.googleapis.com/css?family=Roboto+Condensed:300' rel='stylesheet' type='text/css'>
     <script src="http://code.jquery.com/jquery-1.12.0.min.js"></script>
+    <script src="/res/moment.min.js"></script>
     <script type="text/javascript">
 
         var data = {
@@ -39,25 +40,47 @@
             ]
         }
 
-        $(function() {
+        function update() {
             // Put the data in the places
+            $.get(
+                '/feed.json',
+                function(data) {
+                    for (var i in data['news']) {
+                        var article = data['news'][i];
+                        $('div#news ul').append($('<li>').html(article));
+                    }
 
-            for (var i in data['news']) {
-                var article = data['news'][i];
-                $('div#news ul').append($('<li>').html(article));
-            }
+                    for (var i in data['weather']) {
+                        var forecast = data['weather'][i];
 
-            for (var i in data['weather']) {
-                var forecast = data['weather'][i];
+                        var con = $('<li>').addClass('no-'+i);
+                        con.append($('<h1>').html(forecast['day'] + ' - ' + forecast['dow'] + ', ' + forecast['date']));
+                        con.append($('<h2>').addClass('forecast').html(forecast['forecast']));
+                        con.append($('<h2>').addClass('minmax').html('Min ' + forecast['min'] + ' // ' + 'Max ' + forecast['max']));
 
-                var con = $('<li>');
-                con.append($('<h1>').html(forecast['day'] + ' - ' + forecast['dow'] + ', ' + forecast['date']));
-                con.append($('<h2>').addClass('forecast').html(forecast['forecast']));
-                con.append($('<h2>').addClass('minmax').html('Min ' + forecast['min'] + ' // ' + 'Max ' + forecast['max']));
+                        $('div#weather ul').append(con);
+                    }
+                }
+            );
 
-                $('div#weather ul').append(con);
-            }
+            // Update hourly
+            setTimeout(arguments.callee, 1000 * 60 * 60);
+        }
 
+        function clock() {
+            var tm = moment().format('h:mm a');
+            var dt = moment().format('dddd, Do MMMM YYYY');
+
+            $('h1.time').html(tm);
+            $('h1.date').html(dt);
+
+            // Update every 5 seconds
+            setTimeout(arguments.callee, 5000);
+        }
+
+        $(function() {
+            update();
+            clock();
         });
 
     </script>
@@ -103,6 +126,12 @@
             margin-bottom: 20px;
         }
 
+        div#weather ul li.no-1 {
+            margin-top: 0;
+            padding-top: 20px;
+            border-top: 1px solid #878787;
+        }
+
         div#news {
             position: fixed;
             width: 100%;
@@ -111,10 +140,6 @@
 
         div#news ul li {
             margin-bottom: 5px;
-        }
-
-        hi {
-            color: #878787;
         }
 
     </style>
