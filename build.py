@@ -48,7 +48,8 @@ weather.append({
     'day': 'Now',
     'temperature': weather_current['temp_c'],
     'forecast': weather_current['weather'],
-    'wind': weather_current['wind_string']
+    'wind': weather_current['wind_string'],
+    'icon': weather_current['icon']
 })
 
 weather_future_url = "http://api.wunderground.com/api/{0}/forecast/q/{1}.json".format(config.WUNDERLAND_API, config.WUNDERLAND_LOCATION)
@@ -68,7 +69,8 @@ for day in weather_future_simple:
         'day': day['title'],
         'temperature': detail['low']['celsius'] if i in (2,4) else detail['high']['celsius'],
         'forecast': day['fcttext_metric'],
-        'wind': str(detail['maxwind']['kph']) + 'kph ' + (detail['maxwind']['dir'] if detail['maxwind']['dir'] != 'Variable' else '')
+        'wind': str(detail['maxwind']['kph']) + 'kph ' + (detail['maxwind']['dir'] if detail['maxwind']['dir'] != 'Variable' else ''),
+        'icon': day['icon']
     });
 
 

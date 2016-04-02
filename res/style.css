@@ -1,3 +1,8 @@
+@font-face {
+    font-family: weather;
+    src: url(/res/artill_clean_icons.otf);
+}
+
 body {
     background-color: #000;
     font-family: 'Roboto Condensed', sans-serif;
@@ -42,6 +47,13 @@ div#weather ul li {
 div#weather ul li h2.forecast {
     font-size: 90%;
     color: #ccc;
+}
+
+div#weather span.icon {
+    font-family: weather;
+    font-size: 200%;
+    line-height: 0;
+    margin-left: 10px;
 }
 
 div#news {

@@ -26,8 +26,26 @@
                         var forecast = data['weather'][i];
 
                         var con = $('<li>').addClass('no-'+i);
+                        var icontxt = '';
+                        switch (forecast['icon']) {
+                            case 'rain':
+                            case 'nt_rain':
+                                icontxt = 'l';
+                                break;
+                            case 'chancerain':
+                            case 'nt_chancerain':
+                                icontxt = 'f';
+                                break;
+                            case 'partlycloudy':
+                            case 'nt_partlycloudy':
+                                icontxt = 'a';
+                                break;
+//                                icontxt = 'abcdefghijklmnopqrstuvwxyz';
+//                                break;
+                        }
+                        var icontxt_html = $('<span>').addClass('icon').text(icontxt);
                         con.append($('<h2>').html(forecast['day'] + ' //'));
-                        con.append($('<h1>').addClass('minmax').html(forecast['wind'] + ' &mdash; ' + ' ' + forecast['temperature'] + '&deg;C'));
+                        con.append($('<h1>').addClass('minmax').html(forecast['wind'] + ' &mdash; ' + ' ' + forecast['temperature'] + '&deg;C').append(icontxt_html));
                         con.append($('<h2>').addClass('forecast').html(forecast['forecast']));
 
                         $('div#weather ul').append(con);
