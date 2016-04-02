@@ -34,17 +34,9 @@ div#weather {
 }
 
 div#weather ul li {
-    margin-bottom: 20px;
-}
-
-div#weather ul li {
-    margin-top: 0;
-    padding-top: 20px;
-}
-
-div#weather ul li.no-0 {
-    border-top: none;
+    margin: 0;
     padding-top: 0;
+    padding-bottom: 30px;
 }
 
 div#weather ul li h2.forecast {
