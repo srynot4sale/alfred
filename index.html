@@ -16,14 +16,14 @@
                 function(data) {
                     for (var i in data['news']) {
                         var article = data['news'][i];
-                        $('div#news ul').append($('<li>').html(article));
+                        $('div#news ul').append($('<li>').html('&bull; ' + article));
                     }
 
                     for (var i in data['weather']) {
                         var forecast = data['weather'][i];
 
                         var con = $('<li>').addClass('no-'+i);
-                        con.append($('<h1>').html(forecast['day'] + ' - ' + forecast['dow'] + ', ' + forecast['date']));
+                        con.append($('<h1>').html(forecast['day'] + ' &mdash; ' + forecast['dow']));
                         con.append($('<h2>').addClass('forecast').html(forecast['forecast']));
                         con.append($('<h2>').addClass('minmax').html('Min ' + forecast['min'] + ' // ' + 'Max ' + forecast['max']));
 
@@ -38,7 +38,7 @@
 
         function clock() {
             var tm = moment().format('h:mm a');
-            var dt = moment().format('dddd, Do MMMM YYYY');
+            var dt = moment().format('dddd, Do MMMM');
 
             $('h1.time').html(tm);
             $('h1.date').html(dt);
