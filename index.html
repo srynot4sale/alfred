@@ -15,11 +15,30 @@
             $.get(
                 '/feed.json',
                 function(data) {
+                    $('div#calendar ul li').remove();
+
+                    var lastday = moment();
+                    for (var i in data['events']) {
+                        if (i > 10) {
+                            break;
+                        }
+
+                        var ev = data['events'][i];
+                        var start = moment(ev[0]);
+                        if (lastday.format('D') != start.format('D')) {
+                            $('div#calendar ul').append($('<li>').append($('<h2>').html(start.format('dddd, Do MMMM'))));
+                            lastday = start;
+                        }
+                        $('div#calendar ul').append($('<li>').append($('<strong>').html(start.format('h:mm a'))).append($('<span>').html(ev[1])));
+                    }
+
+/**
                     $('div#news ul li').remove();
                     for (var i in data['news']) {
                         var article = data['news'][i];
                         $('div#news ul').append($('<li>').html('&bull; ' + article));
                     }
+**/
 
                     $('div#weather ul li').remove();
                     for (var i in data['weather']) {
@@ -110,8 +129,8 @@
 </div>
 
 
-<div id="news">
-    <h1>Wellington News</h1>
+<div id="calendar">
+    <h1>Upcoming</h1>
     <ul>
 
     </ul>

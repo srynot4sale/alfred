@@ -56,13 +56,24 @@ div#weather span.icon {
     margin-left: 10px;
 }
 
-div#news {
+div#calendar {
     position: fixed;
     width: 100%;
     bottom: 50px;
 }
 
-div#news ul li {
+div#calendar ul li {
     margin-bottom: 5px;
     color: #ccc;
+}
+
+div#calendar ul li h2 {
+    margin-top: 1em;
+}
+
+div#calendar ul li strong {
+    width: 5em;
+    margin-right: 1em;
+    text-align: right;
+    display: inline-block;
 }
