@@ -48,7 +48,7 @@ weather.append({
     'day': 'Now',
     'temperature': weather_current['temp_c'],
     'forecast': weather_current['weather'],
-    'wind': weather_current['wind_string'],
+    'wind': str(weather_current['wind_kph']) + 'kph ' + (weather_current['wind_dir'] if weather_current['wind_dir'] != 'Variable' else ''),
     'icon': weather_current['icon']
 })
 
