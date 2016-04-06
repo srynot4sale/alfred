@@ -83,21 +83,6 @@ for event in eventsResult:
 
 
 ###
-# Get news
-###
-news_base_url = "http://www.stuff.co.nz/dominion-post"
-news_base = get_page(news_base_url)
-
-# Get main stories
-stories = []
-for item in news_base('section.portrait .it-article-headline a').items():
-    story = get_page(make_url(news_base_url, item.attr.href))
-    title = story('article.story_landing h1').text()
-
-    stories.append(title)
-
-
-###
 # Get weather
 ###
 weather_current_url = "http://api.wunderground.com/api/{0}/conditions/q/{1}.json".format(config.WUNDERLAND_API, config.WUNDERLAND_LOCATION)
@@ -136,7 +121,6 @@ for day in weather_future_simple:
 
 
 ret = {
-    'news': stories,
     'weather': weather,
     'events': events
 }
