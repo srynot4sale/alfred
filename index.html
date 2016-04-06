@@ -10,11 +10,26 @@
     <script src="/res/moment.min.js"></script>
     <script type="text/javascript">
 
+        var cachebust = '';
+
         function update() {
             // Put the data in the places
             $.get(
                 '/feed.json',
                 function(data) {
+
+                    // Reload the page if the cachebust is triggered
+                    if (data['cachebust'] !== cachebust) {
+                        var oldcachebust = cachebust;
+                        cachebust = data['cachebust'];
+
+                        if (oldcachebust !== '') {
+                            document.location.reload();
+                            return;
+                        }
+                    }
+
+                    // Update calendar
                     $('div#calendar ul li').remove();
 
                     var lastday = moment();
@@ -32,6 +47,7 @@
                         $('div#calendar ul').append($('<li>').append($('<strong>').html(start.format('h:mm a'))).append($('<span>').html(ev[1])));
                     }
 
+                    // Update weather
                     $('div#weather ul li').remove();
                     for (var i in data['weather']) {
                         var forecast = data['weather'][i];
@@ -82,8 +98,8 @@
                 }
             );
 
-            // Update hourly
-            setTimeout(arguments.callee, 1000 * 60 * 60);
+            // Update every 5 minutes
+            setTimeout(arguments.callee, 1000 * 60 * 5);
         }
 
         function clock() {

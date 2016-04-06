@@ -62,6 +62,10 @@ def make_url(base, partial):
 
     return urlparse.urljoin(base, partial)
 
+def get_git_revision_hash():
+    import subprocess
+    return subprocess.check_output(['git', 'rev-parse', 'HEAD']).strip()
+
 
 ###
 # Get Google Calender entries
@@ -121,6 +125,7 @@ for day in weather_future_simple:
 
 
 ret = {
+    'cachebust': get_git_revision_hash(),
     'weather': weather,
     'events': events
 }
