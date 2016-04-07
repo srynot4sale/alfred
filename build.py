@@ -1,6 +1,7 @@
 from __future__ import print_function
 import httplib2
 import os
+import re
 
 from apiclient import discovery
 import oauth2client
@@ -93,14 +94,31 @@ weather_current_url = "http://api.wunderground.com/api/{0}/conditions/q/{1}.json
 r = urllib.urlopen(weather_current_url)
 weather_current = json.loads(r.read())['current_observation']
 
-weather = []
-weather.append({
+weather = [
+    {
+        'day': 'Now'
+    },
+    {
+        'day': 'Today'
+    },
+    {
+        'day': 'Tonight'
+    },
+    {
+        'day': 'Tomorrow'
+    },
+    {
+        'day': 'Tomorrow night'
+    }
+]
+
+weather[0] = {
     'day': 'Now',
     'temperature': weather_current['temp_c'],
     'forecast': weather_current['weather'],
-    'wind': str(weather_current['wind_kph']) + 'kph ' + (weather_current['wind_dir'] if weather_current['wind_dir'] != 'Variable' else ''),
+    'wind': str(weather_current['wind_kph']) + ' km/h ' + (weather_current['wind_dir'] if weather_current['wind_dir'] != 'Variable' else ''),
     'icon': weather_current['icon']
-})
+}
 
 weather_future_url = "http://api.wunderground.com/api/{0}/forecast/q/{1}.json".format(config.WUNDERLAND_API, config.WUNDERLAND_LOCATION)
 r = urllib.urlopen(weather_future_url)
@@ -115,13 +133,24 @@ for day in weather_future_simple:
         break
 
     detail = weather_future_detail[0 if i in (1,2) else 1]
-    weather.append({
-        'day': day['title'],
-        'temperature': detail['low']['celsius'] if i in (2,4) else detail['high']['celsius'],
-        'forecast': day['fcttext_metric'],
-        'wind': str(detail['maxwind']['kph']) + 'kph ' + (detail['maxwind']['dir'] if detail['maxwind']['dir'] != 'Variable' else ''),
-        'icon': day['icon']
-    });
+    icon = day['icon']
+    forecast = day['fcttext_metric']
+
+    # Remove temp
+    forecast = re.sub(r'(Low|High) [0-9]+C\.(\s+)?', '', forecast)
+    wind = re.compile(r'Winds ([^\s]+) at ([^\.]+ km\/h)\.').search(forecast)
+    if wind:
+        forecast = re.sub(r'Winds [^\s]+ at [^\.]+ km\/h\.(\s+)?', '', forecast)
+        wind = '{0} {1}'.format(wind.group(2), wind.group(1)).replace(' to ', '-')
+    else:
+        wind = str(detail['maxwind']['kph']) + ' km/h ' + (detail['maxwind']['dir'] if detail['maxwind']['dir'] != 'Variable' else '')
+
+    temperature = detail['low']['celsius'] if i in (2,4) else detail['high']['celsius']
+
+    weather[i]['temperature'] = temperature
+    weather[i]['forecast'] = forecast.strip()
+    weather[i]['wind'] = wind.strip()
+    weather[i]['icon'] = icon
 
 
 ret = {

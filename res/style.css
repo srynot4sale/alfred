@@ -25,35 +25,77 @@ li {
     padding: 0;
 }
 
-h1.time {
+div#now {
+    margin-bottom: 20px;
+    overflow: auto;
+    border-bottom: 1px solid #ccc;
+    position: relative;
+}
+
+div#now div.datetime {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+}
+
+div#now div.datetime h1.time {
+    margin-bottom: 0;
+    display: inline-block;
     font-size: 600%;
 }
 
-div#now {
-    float: left;
+div#now div.datetime h2.date {
+    display: inline-block;
 }
 
-div#weather {
+div#now div.weather_now {
     float: right;
     text-align: right;
 }
 
+div#now div.weather_now h1 {
+    margin-bottom: 0;
+}
+
+div#weather {
+    text-align: right;
+    position: fixed;
+    width: 100%;
+    bottom: 50px;
+    right: 50px;
+}
+
 div#weather ul li {
     margin: 0;
+    padding: 0;
     padding-top: 0;
-    padding-bottom: 30px;
+    padding-top: 30px;
+}
+
+div#weather ul li.no-1 {
+    margin-left: 0;
+}
+
+div#weather ul li h1 {
+    margin-bottom: 0;
+}
+
+div#weather ul li h2 {
+    margin-bottom: 0;
 }
 
 div#weather ul li h2.forecast {
-    font-size: 90%;
     color: #ccc;
 }
 
-div#weather span.icon {
+span.icon {
     font-family: weather;
-    font-size: 200%;
-    line-height: 0;
-    margin-left: 10px;
+    font-size: 60px;
+    line-height: 20px;
+}
+
+div#weather span.icon {
+    display: inline-block;
 }
 
 div#calendar {
