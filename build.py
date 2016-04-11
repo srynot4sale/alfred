@@ -137,7 +137,7 @@ for day in weather_future_simple:
     forecast = day['fcttext_metric']
 
     # Remove temp
-    forecast = re.sub(r'(Low|High) [0-9]+C\.(\s+)?', '', forecast)
+    forecast = re.sub(r'(Low|High) ([^\.]+)?[0-9]+C\.(\s+)?', '', forecast)
     wind = re.compile(r'Winds ([^\s]+) at ([^\.]+ km\/h)\.').search(forecast)
     if wind:
         forecast = re.sub(r'Winds [^\s]+ at [^\.]+ km\/h\.(\s+)?', '', forecast)
