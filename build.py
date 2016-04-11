@@ -156,7 +156,7 @@ for day in weather_future_simple:
 ###
 # Get sweet photo
 ###
-reddit_photos_url = "https://www.reddit.com/r/EarthPorn/top/.json?sort=top&t=day"
+reddit_photos_url = "https://www.reddit.com/r/EarthPorn/top/.json?sort=top&t=week"
 r = requests.get(reddit_photos_url, headers={'User-Agent': 'https://github.com/srynot4sale/alfred'})
 photo_listings = r.json()
 if 'data' in photo_listings.keys():
