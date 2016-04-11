@@ -10,6 +10,7 @@
     <script type="text/javascript">
 
         var cachebust = '';
+        var last_background = '';
 
         function get_forecast_icon(forecast) {
             switch (forecast) {
@@ -113,7 +114,10 @@
                     }
 
                     // Set background image
-                    $('html').css('background', 'url(' + data['background'] + ') no-repeat center center fixed');
+                    if (last_background != data['background']) {
+                        $('html').css('background', 'url(' + data['background'] + ') no-repeat center center fixed');
+                        last_background = data['background'];
+                    }
                 }
             );
 
