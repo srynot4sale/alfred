@@ -14,7 +14,7 @@ html {
 body {
     font-family: 'Roboto Condensed', sans-serif;
     color: #fff;
-    padding: 50px;
+    padding: 20px;
 }
 
 h1,
@@ -68,8 +68,8 @@ div#weather {
     text-align: right;
     position: fixed;
     width: 100%;
-    bottom: 50px;
-    right: 60px;
+    bottom: 20px;
+    right: 28px;
 }
 
 div#weather ul li {
@@ -110,7 +110,7 @@ div#weather span.icon {
 
 div#calendar {
     position: fixed;
-    bottom: 50px;
+    bottom: 20px;
     background: rgba(0, 0, 0, 0.85);
     padding: 20px;
 }
