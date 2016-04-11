@@ -11,7 +11,17 @@ Code is very basic, thrown-together and haphazard. But does the trick!
 ![Screenshot of Alfred in action](https://raw.githubusercontent.com/srynot4sale/alfred/master/screenshot.png)
 
 
-## Dependency
+# How it works
+
+The ``build.py`` Python script is called by the cron job and builds the ``feed.json`` file. This is regularly
+loaded by the webpage and used to refresh the data on the screen. The webpage will also detect if you have
+pulled some new code and refresh the page.
+
+``build.py`` uses http://weather.com as a datasource for the weather, Google Calendar for the calendar, and
+https://reddit.com/r/earthporn for the background.
+
+
+## Dependencies
 
 - Python 2.x (w/ virtualenv and pip)
 - Static webserver
@@ -25,6 +35,10 @@ Code is very basic, thrown-together and haphazard. But does the trick!
     # Install pip requirements
     virtualenv env
     env/bin/pip install -r requirements.txt
+
+    # Update config
+    cp config.py.example config.py
+    vim config.py # Update weather details
 
     # Setup cron job
     cp alfred.cron /etc/cron.d/alfred
