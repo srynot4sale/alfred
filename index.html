@@ -5,7 +5,6 @@
     <title>Alfred</title>
 
     <link href="http://fonts.googleapis.com/css?family=Roboto+Condensed:300" rel="stylesheet" type="text/css">
-    <link rel="stylesheet" href="/res/style.css">
     <script src="/res/jquery-1.12.0.min.js"></script>
     <script src="/res/moment.min.js"></script>
     <script type="text/javascript">
@@ -112,6 +111,9 @@
 
                         $('div#weather ul').append(con);
                     }
+
+                    // Set background image
+                    $('html').css('background', 'url(' + data['background'] + ') no-repeat center center fixed');
                 }
             );
 
@@ -131,6 +133,11 @@
         }
 
         $(function() {
+
+            // Prevent CSS caching
+            var ts = new Date().getTime().toString();
+            $('head').append('<link rel="stylesheet" href="/res/style.css?'+ts+'" type="text/css" />');
+
             update();
             clock();
         });

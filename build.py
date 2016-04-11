@@ -121,8 +121,8 @@ weather[0] = {
 }
 
 weather_future_url = "http://api.wunderground.com/api/{0}/forecast/q/{1}.json".format(config.WUNDERLAND_API, config.WUNDERLAND_LOCATION)
-r = urllib.urlopen(weather_future_url)
-weather_future_json = json.loads(r.read())
+r = requests.get(weather_future_url)
+weather_future_json = r.json()
 weather_future_simple = weather_future_json['forecast']['txt_forecast']['forecastday']
 weather_future_detail = weather_future_json['forecast']['simpleforecast']['forecastday']
 
@@ -153,10 +153,31 @@ for day in weather_future_simple:
     weather[i]['icon'] = icon
 
 
+###
+# Get sweet photo
+###
+reddit_photos_url = "https://www.reddit.com/r/EarthPorn/top/.json?sort=top&t=day"
+r = requests.get(reddit_photos_url, headers={'User-Agent': 'https://github.com/srynot4sale/alfred'})
+photo_listings = r.json()
+if 'data' in photo_listings.keys():
+    for photo in photo_listings['data']['children']:
+        if photo['data']['domain'] != 'i.imgur.com':
+            continue
+
+        if photo['data']['over_18']:
+            continue
+
+        photo_url = photo['data']['url']
+        break
+else:
+    print(photo_listings)
+
+
 ret = {
     'cachebust': get_git_revision_hash(),
     'weather': weather,
-    'events': events
+    'events': events,
+    'background': photo_url
 }
 
 print(json.dumps(ret, indent=4))
