@@ -67,7 +67,7 @@ div#now div.weather_now h1 {
 div#weather {
     text-align: right;
     position: fixed;
-    width: 100%;
+    width: 50%;
     bottom: 20px;
     right: 28px;
 }
