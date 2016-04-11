@@ -83,7 +83,9 @@
                             $('div#calendar ul').append($('<li>').append($('<h2>').html(start.format('dddd, Do MMMM'))));
                             lastday = start;
                         }
-                        $('div#calendar ul').append($('<li>').append($('<strong>').html(start.format('h:mm a'))).append($('<span>').html(ev[1])));
+                        var evnt_date = $('<strong>').html(start.format('h:mm a'));
+                        var event_desc = $('<span>').html(ev[1]);
+                        $('div#calendar ul').append($('<li>').append(evnt_date).append(event_desc));
                     }
 
                     // Update weather
@@ -103,6 +105,7 @@
 
                         var con = $('<li>').addClass('no-'+i);
                         var icontxt_html = get_forecast_icon(forecast['icon']);
+
                         con.append($('<h2>').html(forecast['day'] + ' // ').append(icontxt_html));
                         con.append($('<h1>').addClass('minmax').html(forecast['wind'] + ' &mdash; ' + ' ' + forecast['temperature'] + '&deg;C'));
                         con.append($('<h2>').addClass('forecast').html(forecast['forecast']));

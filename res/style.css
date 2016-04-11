@@ -3,8 +3,16 @@
     src: url(/res/artill_clean_icons.otf);
 }
 
-body {
+html {
     background-color: #000;
+    background: url(/res/bg.jpg) no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+body {
     font-family: 'Roboto Condensed', sans-serif;
     color: #fff;
     padding: 50px;
@@ -28,24 +36,24 @@ li {
 div#now {
     margin-bottom: 20px;
     overflow: auto;
-    border-bottom: 1px solid #ccc;
     position: relative;
+    background: rgba(0, 0, 0, 0.85);
+    padding: 20px 20px 15px;
 }
 
 div#now div.datetime {
-    position: absolute;
-    bottom: 0;
-    left: 0;
+    float: left;
 }
 
 div#now div.datetime h1.time {
-    margin-bottom: 0;
     display: inline-block;
     font-size: 600%;
 }
 
 div#now div.datetime h2.date {
     display: inline-block;
+    margin-left: 20px;
+    font-size: 180%;
 }
 
 div#now div.weather_now {
@@ -62,14 +70,17 @@ div#weather {
     position: fixed;
     width: 100%;
     bottom: 50px;
-    right: 50px;
+    right: 60px;
 }
 
 div#weather ul li {
     margin: 0;
     padding: 0;
-    padding-top: 0;
-    padding-top: 30px;
+    padding: 10px 20px 20px;
+    margin-top: 30px;
+    background: rgba(0, 0, 0, 0.85);
+    float: right;
+    clear: right;
 }
 
 div#weather ul li.no-1 {
@@ -100,8 +111,9 @@ div#weather span.icon {
 
 div#calendar {
     position: fixed;
-    width: 100%;
     bottom: 50px;
+    background: rgba(0, 0, 0, 0.85);
+    padding: 20px;
 }
 
 div#calendar ul li {
