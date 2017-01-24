@@ -115,7 +115,7 @@
 
                     // Set background image
                     if (last_background != data['background']) {
-                        $('html').css('background', 'url(' + data['background'] + ') no-repeat center center fixed');
+                        $('html').css('background-image', 'url(' + data['background'] + ')');
                         last_background = data['background'];
                     }
                 }
