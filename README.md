@@ -32,6 +32,9 @@ https://reddit.com/r/earthporn for the background.
 
     cd srcdir
 
+    # Install required packages
+    sudo apt install libxml2-dev libxslt1-dev python-dev
+
     # Install pip requirements
     virtualenv env
     env/bin/pip install -r requirements.txt
