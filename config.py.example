@@ -1,2 +1,5 @@
-WUNDERLAND_API = 'XXXXXXXXXXX'
-WUNDERLAND_LOCATION = 'NZ/Mount_Cook'
+CALENDARS = {}
+TIMEZONE = 'Pacific/Auckland'
+EVENT_REGEX = [
+    (r'.*$', 'removeme')
+]

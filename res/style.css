@@ -1,21 +1,20 @@
-@font-face {
-    font-family: weather;
-    src: url(/res/artill_clean_icons.otf);
-}
-
 html {
-    background-color: #000;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
     background-size: cover;
     height: 100%;
+    margin: 0;
+    padding: 0;
 }
 
 body {
-    font-family: 'Roboto Condensed', sans-serif;
+    background-color: #000;
+    background-size: 100%;
+    font-family: 'Roboto', sans-serif;
     color: #fff;
-    padding: 20px;
+    padding: 80px;
+    margin: 0;
 }
 
 h1,
@@ -34,106 +33,128 @@ li {
 }
 
 div#now {
-    margin-bottom: 20px;
     overflow: auto;
     position: relative;
-    background: rgba(0, 0, 0, 0.85);
     padding: 20px 20px 15px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.25);
 }
 
 div#now div.datetime {
-    float: left;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    align-content: space-between;
 }
 
 div#now div.datetime h1.time {
+    margin: 0;
+    font-size: 700%;
+    font-weight: 100;
+    letter-spacing: 0px;
+}
+
+div#now div.datetime h1.time span {
     display: inline-block;
-    font-size: 600%;
+    font-size: 30%;
+    text-transform: uppercase;
+    font-weight: 100;
+    letter-spacing: 0px;
 }
 
 div#now div.datetime h2.date {
-    display: inline-block;
-    margin-left: 20px;
+    vertical-align: bottom;
     font-size: 180%;
-}
-
-div#now div.weather_now {
-    float: right;
-    text-align: right;
-}
-
-div#now div.weather_now h1 {
-    margin-bottom: 0;
-}
-
-div#weather {
-    text-align: right;
-    position: fixed;
-    width: 50%;
-    bottom: 20px;
-    right: 28px;
-}
-
-div#weather ul li {
-    margin: 0;
-    padding: 0;
-    padding: 10px 20px 20px;
-    margin-top: 30px;
-    background: rgba(0, 0, 0, 0.85);
-    float: right;
-    clear: right;
-}
-
-div#weather ul li.no-1 {
-    margin-left: 0;
-}
-
-div#weather ul li h1 {
-    margin-bottom: 0;
-}
-
-div#weather ul li h2 {
-    margin-bottom: 0;
-}
-
-div#weather ul li h2.forecast {
-    color: #ccc;
-}
-
-span.icon {
-    font-family: weather;
-    font-size: 60px;
-    line-height: 20px;
-}
-
-div#weather span.icon {
-    display: inline-block;
+    margin-bottom: 20px;
 }
 
 div#calendar {
-    position: fixed;
-    bottom: 20px;
-    background: rgba(0, 0, 0, 0.85);
+    display: flex;
+    justify-content: space-between;
     padding: 20px;
 }
 
+div#calendar ul {
+    padding: 0;
+    flex-grow: 1;
+    width: 33%;
+}
+
 div#calendar ul li {
-    margin-bottom: 5px;
-    color: #ccc;
+    font-size: 150%;
+    margin: 0;
+    padding: 0 20px 10px;
+    background: rgba(0, 0, 0, 0.50);
+    display: flex;
+    align-content: flex-start;
+}
+
+div#calendar ul:first-child li {
+    margin-right: 20px;
+}
+
+div#calendar ul:nth-child(2) li {
+    margin: 0 10px;
+}
+
+div#calendar ul:last-child li {
+    margin-left: 20px;
+}
+
+div#calendar ul li.header {
+    background: transparent;
+    padding: 10px 20px 10px;
 }
 
 div#calendar ul li h2 {
-    margin-top: 1em;
-    font-size: 200%;
+    margin: 0;
+    padding: 0;
+    font-size: 150%;
+    font-weight: 300;
+}
+
+div#calendar ul li:nth-child(2) {
+    padding-top: 30px;
+}
+
+div#calendar ul li:last-child {
+    padding-bottom: 20px;
 }
 
 div#calendar ul li strong {
-    width: 5em;
+    font-weight: 300;
+    flex-basis: 4em;
+    flex-shrink: 0;
     margin-right: 1em;
     text-align: right;
-    display: inline-block;
-    font-size: 120%;
+    font-size: 90%;
 }
 
-div#calendar ul li span {
-    font-size: 140%;
+div#calendar ul li > span {
+    display: block;
+    font-size: 100%;
+    font-weight: 300;
+}
+
+div#calendar ul li strong span {
+    display: inline-block;
+    margin-left: 3px;
+    text-transform: uppercase;
+    font-size: 70%;
+    font-weight: 100;
+}
+
+div#calendar ul li.past > span {
+    text-decoration: line-through;
+}
+
+div#calendar ul li.cal-school {
+    color: #b8f3e3;
+}
+
+div#calendar ul li.cal-bus {
+    color: #fff3a3;
+}
+
+div#calendar ul li.past {
+    color: #aaa !important;
 }

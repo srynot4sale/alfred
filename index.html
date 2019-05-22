@@ -4,52 +4,13 @@
     <meta charset="utf-8"/>
     <title>Alfred</title>
 
-    <link href="http://fonts.googleapis.com/css?family=Roboto+Condensed:300" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:100,300,400">
     <script src="/res/jquery-1.12.0.min.js"></script>
     <script src="/res/moment.min.js"></script>
     <script type="text/javascript">
 
         var cachebust = '';
         var last_background = '';
-
-        function get_forecast_icon(forecast) {
-            switch (forecast) {
-                case 'rain':
-                    icontxt = 'J';
-                case 'nt_rain':
-                    icontxt = 'K';
-                    break;
-                case 'chancerain':
-                    icontxt = 'f';
-                    break;
-                case 'nt_chancerain':
-                    icontxt = 'g';
-                    break;
-                case 'partlycloudy':
-                    icontxt = 'A';
-                    break;
-                case 'nt_partlycloudy':
-                    icontxt = 'a';
-                    break;
-                case 'mostlycloudy':
-                case 'nt_mostlycloudy':
-                case 'cloudy':
-                case 'nt_cloudy':
-                    icontxt = '3';
-                    break;
-                case 'clear':
-                    icontxt = '1';
-                    break;
-                case 'nt_clear':
-                    icontxt = '6';
-                    break;
-                default:
-                    icontxt = '';
-                    break;
-            }
-
-            return $('<span>').addClass('icon').text(icontxt);
-        }
 
         function update() {
             // Put the data in the places
@@ -68,54 +29,79 @@
                         }
                     }
 
+                    /////////////////////////////////////////////////////////////////////////////////////
                     // Update calendar
-                    $('div#calendar ul li').remove();
+                    $('div#calendar ul').remove();
+
+                    // First day - title "TODAY"
+                    var day = $('<ul class="day1">');
+                    day.append($('<li class="header"><h2>Today</h2></li>'));
+                    var days = 0;
 
                     var lastday = moment();
                     for (var i in data['events']) {
-                        if (i > 10) {
-                            break;
-                        }
 
                         var ev = data['events'][i];
                         var start = moment(ev[0]);
-                        if (lastday.format('D') != start.format('D')) {
-                            $('div#calendar ul').append($('<li>').append($('<h2>').html(start.format('dddd, Do MMMM'))));
-                            lastday = start;
-                        }
-                        var evnt_date = $('<strong>').html(start.format('h:mm a'));
-                        var event_desc = $('<span>').html(ev[1]);
-                        $('div#calendar ul').append($('<li>').append(evnt_date).append(event_desc));
-                    }
+                        var end = moment(ev[1]);
+                        var end_raw = ev[1];
+                        var summary = ev[2];
+                        var caltype = ev[3];
 
-                    // Update weather
-                    $('div#weather ul li').remove();
-                    for (var i in data['weather']) {
-                        var forecast = data['weather'][i];
-
-                        // First forecast is current, so treat differently
-                        if (i == 0) {
-                            var con = $('div#now div.weather_now');
-                            con.html('');
-                            con.append($('<div>').append(get_forecast_icon(forecast['icon'])));
-                            con.append($('<h1>').addClass('minmax').html(forecast['wind'] + ' &mdash; ' + ' ' + forecast['temperature'] + '&deg;C').append(icontxt_html));
-                            con.append($('<h2>').addClass('forecast').html(forecast['forecast']));
+                        // If this event ended before today (we might be getting stale data), don't show
+                        if (moment().format('Y-MM-DD') > end.format('Y-MM-DD')) {
                             continue;
                         }
 
-                        var con = $('<li>').addClass('no-'+i);
-                        var icontxt_html = get_forecast_icon(forecast['icon']);
+                        // Handle multi-day events - they come through with a weird end-date that
+                        // includes no time, but is the day AFTER they finish
+                        if (moment().format('Y-MM-DD') == end_raw) {
+                            continue;
+                        }
 
-                        con.append($('<h2>').html(forecast['day'] + ' // ').append(icontxt_html));
-                        con.append($('<h1>').addClass('minmax').html(forecast['wind'] + ' &mdash; ' + ' ' + forecast['temperature'] + '&deg;C'));
-                        con.append($('<h2>').addClass('forecast').html(forecast['forecast']));
+                        // If this event starts after current day, move to next day
+                        if (lastday.format('Y-MM-DD') < start.format('Y-MM-DD')) {
 
-                        $('div#weather ul').append(con);
+                            // Add last day to page
+                            $('div#calendar').append(day);
+
+                            // Increment day counter
+                            days = days + 1;
+
+                            // Create next day
+                            day = $('<ul class="day'+(days + 1)+'">');
+                            day.append($('<li class="header">').append($('<h2>').html(start.format('dddd, Do MMMM'))));
+                            lastday = start;
+                        }
+
+                        // If we have filled 3 columns, stop
+                        if (days >= 3) {
+                            break;
+                        }
+
+                        // Format date
+                        // If started before today
+                        if (lastday.format('Y-MM-DD') > start.format('Y-MM-DD')) {
+                            var evnt_date = $('<strong>').append($('<span>').text('Continues'));
+                        } else {
+                            var evnt_date = $('<strong>').html(start.format('h:mm')).append($('<span>').text(start.format('a')));
+                        }
+
+                        var event_desc = $('<span>').html(summary);
+                        var eclass = 'cal-'+caltype;
+
+                        // Indicate if an event has already started
+                        if (moment() > start) {
+                            eclass += ' past';
+                        }
+
+                        // Add event to current day
+                        day.append($('<li class="'+eclass+'">').append(evnt_date).append(event_desc));
                     }
 
                     // Set background image
                     if (last_background != data['background']) {
-                        $('html').css('background-image', 'url(' + data['background'] + ')');
+                        $('body').css('background-image', 'linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(' + data['background'] + ')');
                         last_background = data['background'];
                     }
                 }
@@ -126,10 +112,11 @@
         }
 
         function clock() {
-            var tm = moment().format('h:mm a');
+            var tm = moment().format('h:mm');
+            var mm = moment().format('a');
             var dt = moment().format('dddd, Do MMMM');
 
-            $('h1.time').html(tm);
+            $('h1.time').html(tm).append($('<span>').append(mm));
             $('h2.date').html(dt);
 
             // Update every 5 seconds
@@ -151,31 +138,20 @@
 </head>
 <body>
 
+<div id="container">
+
 <div id="now">
     <div class="datetime">
         <h1 class="time"></h1>
         <h2 class="date"></h2>
     </div>
-
-    <div class="weather_now"></div>
-</div>
-
-
-<div id="weather">
-    <ul>
-
-    </ul>
-
 </div>
 
 
 <div id="calendar">
-    <h1>Upcoming</h1>
-    <ul>
-
-    </ul>
 </div>
 
+</div>
 
 </body>
 </html>
