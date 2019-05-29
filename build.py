@@ -68,7 +68,7 @@ endTime = endTimeObj.isoformat()
 
 events = []
 for title, calendar in CALENDARS.iteritems():
-    events_result = service.events().list(calendarId=calendar, timeMin=startTime, timeMax=endTime, maxResults=40, singleEvents=True, orderBy='startTime', timeZone='utc').execute()
+    events_result = service.events().list(calendarId=calendar, timeMin=startTime, timeMax=endTime, maxResults=40, singleEvents=True, orderBy='startTime', timeZone=TIMEZONE).execute()
     eventsResult = events_result.get('items', [])
 
     for event in eventsResult:

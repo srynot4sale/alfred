@@ -53,12 +53,6 @@
                             continue;
                         }
 
-                        // Handle multi-day events - they come through with a weird end-date that
-                        // includes no time, but is the day AFTER they finish
-                        if (moment().format('Y-MM-DD') == end_raw) {
-                            continue;
-                        }
-
                         // If this event starts after current day, move to next day
                         if (lastday.format('Y-MM-DD') < start.format('Y-MM-DD')) {
 
@@ -80,9 +74,16 @@
                         }
 
                         // Format date
-                        // If started before today
                         if (lastday.format('Y-MM-DD') > start.format('Y-MM-DD')) {
+                            // If started before today
+                            if (end.format('Y-MM-DD HHmm') == lastday.format('Y-MM-DD 0000')) {
+                                // If ended at midnight last night
+                                continue;
+                            }
                             var evnt_date = $('<strong>').append($('<span>').text('Continues'));
+                        } else if (start.format('HHmm') == '0000' && end.format('HHmm') == '0000') {
+                            // If a whole day event
+                            var evnt_date = $('<strong>').append($('<span>').text('Day'));
                         } else {
                             var evnt_date = $('<strong>').html(start.format('h:mm')).append($('<span>').text(start.format('a')));
                         }
