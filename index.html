@@ -83,7 +83,7 @@
                             var evnt_date = $('<strong>').append($('<span>').text('Continues'));
                         } else if (start.format('HHmm') == '0000' && end.format('HHmm') == '0000') {
                             // If a whole day event
-                            var evnt_date = $('<strong>').append($('<span>').text('Day'));
+                            var evnt_date = $('<strong>').append($('<span>').text('All day'));
                         } else {
                             var evnt_date = $('<strong>').html(start.format('h:mm')).append($('<span>').text(start.format('a')));
                         }
