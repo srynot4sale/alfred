@@ -80,7 +80,7 @@ for title, calendar in CALENDARS.iteritems():
             if re.match(regex, event['summary']) is not None:
                 etitle = newtitle
 
-        events.append((start, end, event['summary'], etitle))
+        events.append((start, end, event['summary'], etitle, event['id']))
 
 
 # Resort the list of events by starttime now we have retreived from all calendars
