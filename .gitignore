@@ -6,3 +6,6 @@
 /config.py
 /credentials.json
 /token.pickle
+/alfred-fe/static/feed.json
+/alfred-fe/.next
+/alfred-fe/node_modules

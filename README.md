@@ -47,6 +47,12 @@ https://reddit.com/r/earthporn for the background.
     cp alfred.cron /etc/cron.d/alfred
     vim /etc/cron.d/alfred # Fix user and paths
 
+    # Build
+    cd alfred-fe
+    npm install
+
+    npm start
+
 
 ## Setup
 
