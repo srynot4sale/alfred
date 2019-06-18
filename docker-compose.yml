@@ -1,0 +1,13 @@
+# vim:ff=unix ts=2 sw=2 ai expandtab
+version: "3.7"
+services:
+  alfred:
+    image: alfred:latest
+    init: true
+    volumes:
+      - type: bind
+        source: ./static
+        target: /app/static
+        read_only: true
+    ports:
+     - "3000:3000"

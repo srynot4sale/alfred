@@ -3,8 +3,8 @@
 Alfred is a simple weather / calendar dashboard, perfect for running on a spare PC / Raspberry Pi hooked
 up to a screen.
 
-The code is simple... just static files and a cron job. Set it up behind a webserver and then just open
-in a browser.
+The code is simple... a simple Next.js server and a cron job. Set it up on a linux host running docker and
+then just open in a browser.
 
 Code is very basic, thrown-together and haphazard. But does the trick!
 
@@ -17,14 +17,14 @@ The ``build.py`` Python script is called by the cron job and builds the ``feed.j
 loaded by the webpage and used to refresh the data on the screen. The webpage will also detect if you have
 pulled some new code and refresh the page.
 
-``build.py`` uses http://weather.com as a datasource for the weather, Google Calendar for the calendar, and
+``build.py`` uses uses the Google Calendar API for the calendar which means it supports Family calendars, and
 https://reddit.com/r/earthporn for the background.
 
 
 ## Dependencies
 
-- Python 2.x (w/ virtualenv and pip)
-- Static webserver
+- Python 3.x (w/ virtualenv and pip)
+- Docker
 - Browser (can be on seperate machine)
 
 
@@ -32,31 +32,32 @@ https://reddit.com/r/earthporn for the background.
 
     cd srcdir
 
-    # Install required packages
-    sudo apt install libxml2-dev libxslt1-dev python-dev
-
     # Install pip requirements
-    virtualenv env
+    virtualenv -p /usr/bin/python3 env
     env/bin/pip install -r requirements.txt
 
     # Update config
     cp config.py.example config.py
-    vim config.py # Update weather details
-
-    # Setup cron job
-    cp alfred.cron /etc/cron.d/alfred
-    vim /etc/cron.d/alfred # Fix user and paths
+    vim config.py # Update details
 
     # Build
-    cd alfred-fe
-    npm install
-
-    npm start
+    make
 
 
-## Setup
+## Setup & run
 
 You'll need to setup Google Calendar credentials
 
     cd srcdir
     env/bin/python build.py
+
+    # Setup cron job
+    cp alfred.cron /etc/cron.d/alfred
+    vim /etc/cron.d/alfred # Fix user and paths
+
+    # Wait for first cron run
+
+    # Run frontend
+    docker-compose up -d
+
+    # Open http://localhost:3000 in your browser!
